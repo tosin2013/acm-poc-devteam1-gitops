@@ -1,0 +1,13 @@
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: cloudprober
+  namespace: acm-poc-devteam1
+spec:
+  selector:
+    matchExpressions:
+      - key: application
+        operator: In
+        values:
+        - cloudprober

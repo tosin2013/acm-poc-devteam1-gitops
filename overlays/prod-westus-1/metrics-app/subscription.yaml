@@ -1,0 +1,47 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: metrics-app-prod-westus-1
+  namespace: acm-poc-devteam1
+  labels:
+    application: metrics-app
+spec:
+  channel: acm-poc-devteam1/acm-poc-devteam1-charts
+  name: metrics-app
+  packageOverrides:
+    - packageName: metrics-app
+      packageOverrides:
+        - path: spec
+          value:
+            replicaCount: 4
+            ingress:
+              annotations:
+                kubernetes.io/ingress.class: nginx
+              enabled: true
+              hosts:
+                - host: metrics-app.prod-west
+                  paths: ["/"]
+            metrics:
+              serviceMonitor: true
+              prometheusRules:
+                - alert: ServiceIsDown
+                  annotations:
+                    description: '{{ $labels.job }} service is unavailable.'
+                    summary: Service is down
+                  expr: version{job="metrics-app"} != 1
+                  for: 1m
+                  labels:
+                    severity: critical
+                - alert: NoTrafficFlow
+                  annotations:
+                    description: 'Service receive {{ $value }} rps, which is below threshold (50 rps).'
+                    summary: No traffic flow
+                  expr: rate(http_requests_total{job="metrics-app", code=~"2[0-9]{2}"}[5m]) < 50
+                  for: 1m
+                  labels:
+                    severity: critical
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: prod-westus-1

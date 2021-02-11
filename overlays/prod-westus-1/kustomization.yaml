@@ -1,0 +1,4 @@
+resources:
+  - placement.yaml
+  - cloudprober/
+  - metrics-app/

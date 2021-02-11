@@ -1,0 +1,28 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: cloudprober-dev-westeu-1
+  namespace: acm-poc-devteam1
+  labels:
+    application: cloudprober
+spec:
+  channel: acm-poc-devteam1/acm-poc-devteam1-charts
+  name: cloudprober
+  packageOverrides:
+    - packageName: cloudprober
+      packageOverrides:
+        - path: spec
+          value:
+            replicaCount: 2
+            ingress:
+              annotations:
+                kubernetes.io/ingress.class: nginx
+              enabled: true
+              hosts:
+                - host: cloudprober.dev
+                  paths: ["/"]
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: dev-westeu-1

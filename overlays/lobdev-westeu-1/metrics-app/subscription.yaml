@@ -1,0 +1,24 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: metrics-app-lobdev-westeu-1
+  namespace: acm-poc-devteam1
+  labels:
+    application: metrics-app
+spec:
+  channel: acm-poc-devteam1/acm-poc-devteam1-charts
+  name: metrics-app
+  packageOverrides:
+    - packageName: metrics-app
+      packageOverrides:
+        - path: spec
+          value:
+            replicaCount: 2
+            ingress:
+              enabled: false
+            serviceMonitor: true
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: lobdev-westeu-1

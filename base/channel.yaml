@@ -1,0 +1,9 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: acm-poc-devteam1-charts
+  namespace: acm-poc-devteam1
+spec:
+  pathname: 'https://vladimir-babichev.github.io/acm-poc-devteam1-charts/'
+  type: HelmRepo

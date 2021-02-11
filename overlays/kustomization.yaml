@@ -1,0 +1,7 @@
+resources:
+  - dev-westeu-1/
+  - lobdev-westeu-1/
+  - uat-northeu-1/
+  - uat-westeu-1/
+  - prod-eastus-1/
+  - prod-westus-1/

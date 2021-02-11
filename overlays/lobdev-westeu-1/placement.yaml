@@ -1,0 +1,10 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: lobdev-westeu-1
+  namespace: acm-poc-devteam1
+spec:
+  clusterSelector:
+    matchLabels:
+      zone: lobdev-westeu-1

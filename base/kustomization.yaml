@@ -1,0 +1,5 @@
+resources:
+- channel.yaml
+- namespace.yaml
+- app-cloudprober.yaml
+- app-metrics-app.yaml
